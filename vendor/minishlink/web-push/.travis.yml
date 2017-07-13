@@ -1,0 +1,34 @@
+dist: trusty
+language: php
+
+ # Downloaded browsers will be cached in selenium-assistant by
+ # web-push-testing-service. Caching will speed up build time.
+cache:
+  directories:
+    - ~/.selenium-assistant
+
+php:
+  - 5.6
+  - hhvm
+  - 7.0
+  - 7.1
+
+env:
+  - TRAVIS_NODE_VERSION="stable"
+
+before_install:
+  - nvm install node
+
+install:
+  - npm install web-push-testing-service -g
+
+before_script:
+  - composer install --prefer-source -n
+  - "export DISPLAY=:99.0"
+  - "sh -e /etc/init.d/xvfb start || echo \"Unable to start virtual display.\""
+  - sleep 3 # give xvfb some time to start
+
+script:
+  - web-push-testing-service start example -p 9012
+  - php ./vendor/phpunit/phpunit/phpunit -c phpunit.travis.xml
+  - web-push-testing-service stop example
