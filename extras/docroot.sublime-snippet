@@ -1,0 +1,27 @@
+<snippet>
+<content><![CDATA[//date_default_timezone_set('America/New_York');
+\$spath = str_replace("\\\","/",getcwd()).'/';
+\$servroot = rtrim(\$_SERVER['DOCUMENT_ROOT'],'/').'/';
+if ( !empty( \$_SERVER['HTTPS'] ) ) {
+	\$hostroot = 'https://'.\$_SERVER['HTTP_HOST'].'/';
+}else{
+	\$hostroot = 'http://'.\$_SERVER['HTTP_HOST'].'/';
+}
+\$hpath = str_replace(\$servroot, \$hostroot, \$spath);
+\$name = basename(__FILE__, '.php'); 
+\$fname = basename(__FILE__); 
+/*echo getcwd().'<br>'; 
+echo \$spath.'<br>';
+echo \$servroot.'<br>';
+echo \$hostroot.'<br>';
+echo \$hpath;
+echo \$fname.'<br>';
+echo \$name.'<br>'; exit;*/
+]]></content>
+<!-- Optional: Tab trigger to activate the snippet -->
+<tabTrigger>php:docroot</tabTrigger>
+<!-- Optional: Scope the tab trigger will be active in -->
+<!-- <scope>source.php</scope> -->
+<!-- Optional: Description to show in the menu -->
+<description></description>
+</snippet>
